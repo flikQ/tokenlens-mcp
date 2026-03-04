@@ -1,6 +1,6 @@
 # TokenLens MCP Server
 
-MCP server that exposes [TokenLens](https://tokenlens.dev) pricing data as tools for AI agents (Claude Code, Cursor, Windsurf, Claude Desktop, etc.).
+MCP server that exposes [TokenLens](https://tokenlens.flikq.dev) pricing data as tools for AI agents (Claude Code, Cursor, Windsurf, Claude Desktop, etc.).
 
 ## Tools
 
@@ -29,9 +29,9 @@ npm run build # or: bun run build
 claude mcp add tokenlens -- node /path/to/tokenlens-mcp/dist/index.js
 ```
 
-To always use live pricing data from tokenlens.dev:
+To always use live pricing data from tokenlens.flikq.dev:
 ```bash
-claude mcp add tokenlens -- env TOKENLENS_DATA_URL=https://tokenlens.dev/api/data node /path/to/tokenlens-mcp/dist/index.js
+claude mcp add tokenlens -- env TOKENLENS_DATA_URL=https://tokenlens.flikq.dev/api/data node /path/to/tokenlens-mcp/dist/index.js
 ```
 
 **Cursor · Windsurf · Claude Desktop** — add to config JSON:
@@ -47,7 +47,7 @@ claude mcp add tokenlens -- env TOKENLENS_DATA_URL=https://tokenlens.dev/api/dat
       "command": "node",
       "args": ["/path/to/tokenlens-mcp/dist/index.js"],
       "env": {
-        "TOKENLENS_DATA_URL": "https://tokenlens.dev/api/data"
+        "TOKENLENS_DATA_URL": "https://tokenlens.flikq.dev/api/data"
       }
     }
   }
@@ -66,7 +66,7 @@ Use the tokenlens recommend_plan tool. I code 3h/day on claude-sonnet.
 By default the server reads bundled `data/*.json` files from the repo. To always use the latest live pricing data, set:
 
 ```
-TOKENLENS_DATA_URL=https://tokenlens.dev/api/data
+TOKENLENS_DATA_URL=https://tokenlens.flikq.dev/api/data
 ```
 
 The server fetches all data at startup and caches it in memory. If the URL is unreachable it automatically falls back to the bundled local files.
