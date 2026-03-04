@@ -10,28 +10,20 @@
  *   run_scenario      — calculate API vs subscription cost for a usage pattern
  *   break_even        — find the daily usage hours where API cost == plan price
  *   recommend_plan    — single best-value answer for your usage profile
+ *
+ * Data source (in priority order):
+ *   1. TOKENLENS_DATA_URL env var  → fetches JSON from that base URL at startup
+ *   2. TOKENLENS_DATA_DIR env var  → reads JSON from that local directory
+ *   3. Auto-detect local path      → ../data (standalone) or ../../data (monorepo)
  */
 
-import { readFileSync } from "node:fs"
-import { createRequire } from "node:module"
+import { existsSync, readFileSync } from "node:fs"
 import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod"
-
-// ---------------------------------------------------------------------------
-// Data loading — resolves relative to the repo's /data directory
-// ---------------------------------------------------------------------------
-
-const __dirname = dirname(fileURLToPath(import.meta.url))
-// mcp/dist/index.js → ../../data
-const DATA_DIR = join(__dirname, "..", "data")
-
-function loadJson<T>(file: string): T {
-  return JSON.parse(readFileSync(join(DATA_DIR, file), "utf-8")) as T
-}
 
 // ---------------------------------------------------------------------------
 // Types (inlined from lib/types.ts — no runtime dep on Next.js app)
@@ -69,6 +61,52 @@ interface Plan {
   limits: PlanLimits
   confidence: string
   last_verified: string
+}
+
+// ---------------------------------------------------------------------------
+// Data loading — HTTP-first with local fallback
+// ---------------------------------------------------------------------------
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+const DATA_URL = process.env.TOKENLENS_DATA_URL?.replace(/\/$/, "")
+const DATA_DIR_OVERRIDE = process.env.TOKENLENS_DATA_DIR
+
+function resolveLocalDataDir(): string {
+  if (DATA_DIR_OVERRIDE) return DATA_DIR_OVERRIDE
+  // standalone repo: dist/index.js → ../data
+  const standalone = join(__dirname, "..", "data")
+  // monorepo:        mcp/dist/index.js → ../../data
+  const monorepo = join(__dirname, "..", "..", "data")
+  return existsSync(standalone) ? standalone : monorepo
+}
+
+// Module-level cache — populated once before server starts
+let plans: Plan[]
+let models: Model[]
+
+async function loadAllData(): Promise<void> {
+  const files = ["plans", "models"] as const
+
+  if (DATA_URL) {
+    try {
+      const [p, m] = await Promise.all(
+        files.map((f) => fetch(`${DATA_URL}/${f}.json`).then((r) => {
+          if (!r.ok) throw new Error(`HTTP ${r.status} for ${f}.json`)
+          return r.json()
+        }))
+      )
+      plans = p as Plan[]
+      models = m as Model[]
+      return
+    } catch (err) {
+      process.stderr.write(`[tokenlens-mcp] HTTP fetch failed, falling back to local: ${err}\n`)
+    }
+  }
+
+  const dir = resolveLocalDataDir()
+  plans = JSON.parse(readFileSync(join(dir, "plans.json"), "utf-8")) as Plan[]
+  models = JSON.parse(readFileSync(join(dir, "models.json"), "utf-8")) as Model[]
 }
 
 // ---------------------------------------------------------------------------
@@ -154,9 +192,6 @@ server.tool(
       .describe("Fraction of tokens that are output (0–1). Default 0.35."),
   },
   async ({ model_id, output_ratio = 0.35 }) => {
-    const plans = loadJson<Plan[]>("plans.json")
-    const models = loadJson<Model[]>("models.json")
-
     const modelMap = new Map(models.map((m) => [m.id, m]))
 
     const rows = plans
@@ -171,7 +206,6 @@ server.tool(
 
         const cost1M = pricedModel ? costPer1MTokens(pricedModel, output_ratio) : null
 
-        // Effective cost/1M from subscription: price ÷ cap × 1M
         const subCost1M =
           mo > 0 && cap.tokens ? (mo / cap.tokens) * 1_000_000 : null
 
@@ -245,9 +279,6 @@ server.tool(
       .describe("Model to price API usage against. Default 'claude-sonnet'."),
   },
   async ({ hours_per_day, days_per_month = 22, tokens_per_hour = 800000, output_ratio = 0.35, model_id = "claude-sonnet" }) => {
-    const plans = loadJson<Plan[]>("plans.json")
-    const models = loadJson<Model[]>("models.json")
-
     const model = models.find((m) => m.id === model_id)
     if (!model) {
       return {
@@ -347,9 +378,6 @@ server.tool(
       .describe("Fraction of tokens that are output. Default 0.35."),
   },
   async ({ plan_id, model_id = "claude-sonnet", days_per_month = 22, tokens_per_hour = 800000, output_ratio = 0.35 }) => {
-    const plans = loadJson<Plan[]>("plans.json")
-    const models = loadJson<Model[]>("models.json")
-
     const plan = plans.find((p) => p.id === plan_id)
     if (!plan) {
       return {
@@ -373,7 +401,6 @@ server.tool(
       }
     }
 
-    // Solve: hours * days * tph * cost_per_token = monthly_price
     const costPerToken =
       ((1 - output_ratio) * model.pricing.input_per_1m_usd +
         output_ratio * model.pricing.output_per_1m_usd) /
@@ -457,9 +484,6 @@ server.tool(
       .describe("Maximum monthly budget in USD. If set, excludes plans above this price."),
   },
   async ({ hours_per_day, days_per_month = 22, tokens_per_hour = 800000, output_ratio = 0.35, model_id = "claude-sonnet", max_budget_usd }) => {
-    const plans = loadJson<Plan[]>("plans.json")
-    const models = loadJson<Model[]>("models.json")
-
     const model = models.find((m) => m.id === model_id)
     if (!model) {
       return {
@@ -483,7 +507,6 @@ server.tool(
         const cap = estimateCap(plan, plans)
         const mo = monthlyPrice(plan)
         const withinCap = cap.tokens == null || totalTokens <= cap.tokens
-        // Effective monthly cost: subscription price if within cap, else API
         const effectiveCost = mo === 0 ? apiCost : withinCap ? mo : Infinity
         return { plan, mo, cap, withinCap, effectiveCost }
       })
@@ -545,8 +568,9 @@ server.tool(
 )
 
 // ---------------------------------------------------------------------------
-// Start
+// Start — load data first, then connect transport
 // ---------------------------------------------------------------------------
 
+await loadAllData()
 const transport = new StdioServerTransport()
 await server.connect(transport)
