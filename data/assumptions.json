@@ -1,0 +1,11 @@
+{
+  "default_days_per_month": 22,
+  "default_hours_per_day": 3,
+  "default_tokens_per_hour": 120000,
+  "default_output_ratio": 0.35,
+  "currency_display": "USD",
+  "notes": [
+    "Seed dataset contains placeholders. Replace pricing/limits with sourced values and set confidence accordingly.",
+    "Do not assert token caps without a source URL; use fair_use:true and confidence:'estimated' when unknown."
+  ]
+}

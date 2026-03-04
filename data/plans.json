@@ -1,0 +1,270 @@
+[
+  {
+    "id": "cursor-free",
+    "platform_id": "cursor",
+    "name": "Cursor Free",
+    "price": {
+      "amount": 0,
+      "currency": "USD",
+      "period": "monthly"
+    },
+    "included_models": ["claude-sonnet", "gpt-4o"],
+    "marketing_claims": [
+      "~50 premium model requests/month",
+      "Unlimited requests on slower free models (Cursor Small, DeepSeek v3)",
+      "Limited tab completions"
+    ],
+    "limits": {
+      "monthly_tokens_cap": 4500000
+    },
+    "source_urls": [
+      "https://www.cursor.com/pricing",
+      "https://docs.cursor.com/account/plans-and-usage"
+    ],
+    "effective_from": "2025-06-01",
+    "last_verified": "2026-03-04",
+    "confidence": "estimated"
+  },
+  {
+    "id": "cursor-pro",
+    "platform_id": "cursor",
+    "name": "Cursor Pro",
+    "price": {
+      "amount": 20,
+      "currency": "USD",
+      "period": "monthly"
+    },
+    "included_models": ["claude-sonnet", "gpt-4o", "gpt-4.1"],
+    "marketing_claims": [
+      "$20/mo internal credit pool",
+      "~225 Claude Sonnet requests OR ~500 GPT-4o requests per month",
+      "Unlimited tab completions",
+      "20% off with annual billing"
+    ],
+    "limits": {
+      "monthly_tokens_cap": 20250000
+    },
+    "source_urls": [
+      "https://www.cursor.com/pricing",
+      "https://docs.cursor.com/account/plans-and-usage"
+    ],
+    "effective_from": "2025-06-01",
+    "last_verified": "2026-03-04",
+    "confidence": "estimated"
+  },
+  {
+    "id": "cursor-ultra",
+    "platform_id": "cursor",
+    "name": "Cursor Ultra",
+    "price": {
+      "amount": 200,
+      "currency": "USD",
+      "period": "monthly"
+    },
+    "included_models": ["claude-opus", "claude-sonnet", "gpt-4.1", "gpt-4o"],
+    "marketing_claims": [
+      "$200/mo internal credit pool (10× Pro)",
+      "~2,250 Claude Sonnet requests per month",
+      "Access to all models including Claude Opus",
+      "Priority access to new features"
+    ],
+    "limits": {
+      "usage_multiplier": 10,
+      "multiplier_of_plan_id": "cursor-pro"
+    },
+    "source_urls": [
+      "https://www.cursor.com/pricing",
+      "https://docs.cursor.com/account/plans-and-usage"
+    ],
+    "effective_from": "2025-06-01",
+    "last_verified": "2026-03-04",
+    "confidence": "estimated"
+  },
+  {
+    "id": "windsurf-free",
+    "platform_id": "windsurf",
+    "name": "Windsurf Free",
+    "price": {
+      "amount": 0,
+      "currency": "USD",
+      "period": "monthly"
+    },
+    "included_models": ["claude-sonnet", "gpt-4o"],
+    "marketing_claims": [
+      "25 prompt credits/month on premium models",
+      "Unlimited access to free-tier models after credits deplete",
+      "1 deploy/day"
+    ],
+    "limits": {
+      "fair_use": true
+    },
+    "source_urls": [
+      "https://windsurf.com/pricing",
+      "https://docs.windsurf.com/windsurf/accounts/usage"
+    ],
+    "effective_from": "2026-01-01",
+    "last_verified": "2026-03-04",
+    "confidence": "estimated"
+  },
+  {
+    "id": "windsurf-pro",
+    "platform_id": "windsurf",
+    "name": "Windsurf Pro",
+    "price": {
+      "amount": 15,
+      "currency": "USD",
+      "period": "monthly"
+    },
+    "included_models": ["claude-sonnet", "gpt-4.1", "gpt-4o"],
+    "marketing_claims": [
+      "500 prompt credits/month",
+      "All premium models including SWE-1",
+      "5 deploys/day",
+      "Add-on credits available at $10/250 credits (max $50/mo)"
+    ],
+    "limits": {
+      "fair_use": true
+    },
+    "source_urls": [
+      "https://windsurf.com/pricing",
+      "https://docs.windsurf.com/windsurf/accounts/usage"
+    ],
+    "effective_from": "2026-01-01",
+    "last_verified": "2026-03-04",
+    "confidence": "estimated"
+  },
+  {
+    "id": "claude-code-pro",
+    "platform_id": "claude_code",
+    "name": "Claude Code Pro",
+    "price": {
+      "amount": 20,
+      "currency": "USD",
+      "period": "monthly"
+    },
+    "included_models": ["claude-sonnet", "claude-opus"],
+    "marketing_claims": [
+      "~45 messages per 5-hour rolling window (Sonnet 4.6)",
+      "40–80 compute hours/week",
+      "Full 200K context window",
+      "Included in Claude Pro subscription"
+    ],
+    "limits": {
+      "monthly_tokens_cap": 25000000
+    },
+    "source_urls": [
+      "https://claude.ai/pricing",
+      "https://support.claude.com/en/articles/11145838-using-claude-code-with-your-pro-or-max-plan"
+    ],
+    "effective_from": "2025-10-01",
+    "last_verified": "2026-03-04",
+    "confidence": "estimated"
+  },
+  {
+    "id": "claude-code-max5",
+    "platform_id": "claude_code",
+    "name": "Claude Code Max 5×",
+    "price": {
+      "amount": 100,
+      "currency": "USD",
+      "period": "monthly"
+    },
+    "included_models": ["claude-sonnet", "claude-opus"],
+    "marketing_claims": [
+      "5× the compute of Pro (~200–400 compute hours/week)",
+      "~225 messages per 5-hour rolling window",
+      "Included in Claude Max 5× subscription"
+    ],
+    "limits": {
+      "usage_multiplier": 5,
+      "multiplier_of_plan_id": "claude-code-pro"
+    },
+    "source_urls": [
+      "https://claude.ai/pricing",
+      "https://support.claude.com/en/articles/11145838-using-claude-code-with-your-pro-or-max-plan"
+    ],
+    "effective_from": "2025-10-01",
+    "last_verified": "2026-03-04",
+    "confidence": "estimated"
+  },
+  {
+    "id": "claude-code-max20",
+    "platform_id": "claude_code",
+    "name": "Claude Code Max 20×",
+    "price": {
+      "amount": 200,
+      "currency": "USD",
+      "period": "monthly"
+    },
+    "included_models": ["claude-sonnet", "claude-opus"],
+    "marketing_claims": [
+      "20× the compute of Pro (~800–1,600 compute hours/week)",
+      "~900 messages per 5-hour rolling window",
+      "Highest priority feature access",
+      "Included in Claude Max 20× subscription"
+    ],
+    "limits": {
+      "usage_multiplier": 20,
+      "multiplier_of_plan_id": "claude-code-pro"
+    },
+    "source_urls": [
+      "https://claude.ai/pricing",
+      "https://support.claude.com/en/articles/11145838-using-claude-code-with-your-pro-or-max-plan"
+    ],
+    "effective_from": "2025-10-01",
+    "last_verified": "2026-03-04",
+    "confidence": "estimated"
+  },
+  {
+    "id": "anthropic-api",
+    "platform_id": "anthropic",
+    "name": "Anthropic API",
+    "price": {
+      "amount": 0,
+      "currency": "USD",
+      "period": "monthly"
+    },
+    "included_models": ["claude-opus", "claude-sonnet"],
+    "marketing_claims": [
+      "Pay-per-token — no monthly commitment",
+      "Opus 4.6: $5/1M input · $25/1M output",
+      "Sonnet 4.6: $3/1M input · $15/1M output"
+    ],
+    "limits": {
+      "fair_use": true
+    },
+    "source_urls": [
+      "https://www.anthropic.com/api",
+      "https://platform.claude.com/docs/en/about-claude/pricing"
+    ],
+    "effective_from": "2025-09-01",
+    "last_verified": "2026-03-04",
+    "confidence": "high"
+  },
+  {
+    "id": "openai-api",
+    "platform_id": "openai",
+    "name": "OpenAI API",
+    "price": {
+      "amount": 0,
+      "currency": "USD",
+      "period": "monthly"
+    },
+    "included_models": ["gpt-4.1", "gpt-4o"],
+    "marketing_claims": [
+      "Pay-per-token — no monthly commitment",
+      "GPT-4.1: $2/1M input · $8/1M output",
+      "GPT-4o: $2.50/1M input · $10/1M output"
+    ],
+    "limits": {
+      "fair_use": true
+    },
+    "source_urls": [
+      "https://openai.com/api/pricing",
+      "https://platform.openai.com/docs/pricing"
+    ],
+    "effective_from": "2025-04-14",
+    "last_verified": "2026-03-04",
+    "confidence": "high"
+  }
+]

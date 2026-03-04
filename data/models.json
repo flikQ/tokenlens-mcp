@@ -1,0 +1,58 @@
+[
+  {
+    "id": "claude-opus",
+    "provider": "anthropic",
+    "label": "Claude Opus 4.6",
+    "context_window_tokens": 200000,
+    "pricing": {
+      "input_per_1m_usd": 5.00,
+      "output_per_1m_usd": 25.00
+    },
+    "efficiency": {
+      "verbosity_multiplier": 1.1,
+      "retry_multiplier": 1.05
+    }
+  },
+  {
+    "id": "claude-sonnet",
+    "provider": "anthropic",
+    "label": "Claude Sonnet 4.6",
+    "context_window_tokens": 200000,
+    "pricing": {
+      "input_per_1m_usd": 3.00,
+      "output_per_1m_usd": 15.00
+    },
+    "efficiency": {
+      "verbosity_multiplier": 1.1,
+      "retry_multiplier": 1.05
+    }
+  },
+  {
+    "id": "gpt-4.1",
+    "provider": "openai",
+    "label": "GPT-4.1",
+    "context_window_tokens": 1000000,
+    "pricing": {
+      "input_per_1m_usd": 2.00,
+      "output_per_1m_usd": 8.00
+    },
+    "efficiency": {
+      "verbosity_multiplier": 1.1,
+      "retry_multiplier": 1.05
+    }
+  },
+  {
+    "id": "gpt-4o",
+    "provider": "openai",
+    "label": "GPT-4o",
+    "context_window_tokens": 128000,
+    "pricing": {
+      "input_per_1m_usd": 2.50,
+      "output_per_1m_usd": 10.00
+    },
+    "efficiency": {
+      "verbosity_multiplier": 1.1,
+      "retry_multiplier": 1.05
+    }
+  }
+]

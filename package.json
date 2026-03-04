@@ -1,0 +1,22 @@
+{
+  "name": "tokenlens-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for TokenLens — query AI plan pricing, run cost scenarios, and get plan recommendations from your agent.",
+  "type": "module",
+  "bin": {
+    "tokenlens-mcp": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.3",
+    "typescript": "^5.0.0"
+  }
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "id": "cursor",
+    "name": "Cursor",
+    "website": "https://www.cursor.com",
+    "category": "IDE"
+  },
+  {
+    "id": "windsurf",
+    "name": "Windsurf",
+    "website": "https://windsurf.ai",
+    "category": "IDE"
+  },
+  {
+    "id": "anthropic",
+    "name": "Anthropic",
+    "website": "https://www.anthropic.com",
+    "category": "API"
+  },
+  {
+    "id": "openai",
+    "name": "OpenAI",
+    "website": "https://openai.com",
+    "category": "API"
+  },
+  {
+    "id": "claude_code",
+    "name": "Claude Code",
+    "website": "https://www.anthropic.com",
+    "category": "Hybrid"
+  }
+]

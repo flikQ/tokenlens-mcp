@@ -1,0 +1,42 @@
+[
+  {
+    "id": "dhe_light_debug",
+    "label": "Dev-Hour Equivalent: Light Debug",
+    "description": "Fix a small bug with minimal context; includes quick diagnosis + patch + unit test.",
+    "token_budget": {
+      "input_tokens": 25000,
+      "output_tokens": 15000
+    },
+    "assumed_minutes_of_human_work": 60
+  },
+  {
+    "id": "dhe_feature_medium",
+    "label": "Dev-Hour Equivalent: Medium Feature",
+    "description": "Implement a medium feature across multiple files with validation and tests.",
+    "token_budget": {
+      "input_tokens": 80000,
+      "output_tokens": 60000
+    },
+    "assumed_minutes_of_human_work": 60
+  },
+  {
+    "id": "dhe_refactor_large",
+    "label": "Dev-Hour Equivalent: Large Refactor",
+    "description": "Refactor multiple modules with structure changes and regression tests.",
+    "token_budget": {
+      "input_tokens": 180000,
+      "output_tokens": 120000
+    },
+    "assumed_minutes_of_human_work": 60
+  },
+  {
+    "id": "dhe_long_context_review",
+    "label": "Dev-Hour Equivalent: Long-Context Review",
+    "description": "Review a large codebase slice (long context) and propose changes with patch notes.",
+    "token_budget": {
+      "input_tokens": 220000,
+      "output_tokens": 70000
+    },
+    "assumed_minutes_of_human_work": 60
+  }
+]
